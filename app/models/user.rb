@@ -7,11 +7,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
   validates_presence_of :name, :email, :password
 
-=begin
-  def authenticate(params_password)
-    password_hash == params_password
-  end
-=end
 
   def ensure_authentication_token
     if authentication_token.blank?
