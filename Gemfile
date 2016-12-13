@@ -48,3 +48,4 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "active_model_serializers", "~> 0.10.2"
 gem 'rack-cors', :require => 'rack/cors'
+gem 'bcrypt'
