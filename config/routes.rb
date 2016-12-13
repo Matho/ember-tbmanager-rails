@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
+
   root to: 'contacts#index'
 
-  resources :users,      defaults: {format: :json}
-  post '/users/sign_in', to: "sessions#create", defaults: {format: :json}
+  devise_for :users, controllers: { sessions: 'sessions' }
+
+  #post '/users/sign_in', to: "sessions#create", defaults: {format: :json}
 
   resources :countries, defaults: {format: :json}
   resources :contacts, defaults: {format: :json}

@@ -1,9 +1,8 @@
-class SessionsController < ApplicationController
+class SessionsController < Devise::SessionsController
+  respond_to :html, :json
+
   def create
-
-    user = User.find_by_email(params[:user][:email])
-
-    if user && user.authenticate(params[:user][:password])
+    super do |user|
       if request.format.json?
         data = {
             token: user.authentication_token,

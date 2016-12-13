@@ -14,6 +14,10 @@ class UsersController < ApplicationController
     @user.password = user_params[:password]
     @user.save
 
+    @user.password = ""
+
+    puts "UsersController#create params: " + @user.to_json
+
     respond_to do |format|
       format.json { render json: @user }
     end

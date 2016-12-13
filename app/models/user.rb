@@ -1,22 +1,31 @@
-require 'bcrypt'
-
 class User < ApplicationRecord
-  # users.password_hash in the database is a :string
-  include BCrypt
+  before_save :ensure_authentication_token
 
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
   validates_presence_of :name, :email, :password
 
-  def password
-    @password ||= Password.new(password_hash)
-  end
-
-  def password=(new_password)
-    @password = Password.create(new_password)
-    self.password_hash = @password
-  end
-
+=begin
   def authenticate(params_password)
-    password == params_password
+    password_hash == params_password
+  end
+=end
+
+  def ensure_authentication_token
+    if authentication_token.blank?
+      self.authentication_token = generate_authentication_token
+    end
+  end
+
+  private
+
+  def generate_authentication_token
+    loop do
+      token = Devise.friendly_token
+      break token unless User.where(authentication_token: token).first
+    end
   end
 
 end
