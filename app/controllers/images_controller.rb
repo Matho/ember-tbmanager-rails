@@ -1,6 +1,6 @@
 require 'shellwords'
 
-class ImagesController < ApplicationController
+class ImagesController < UnautentificatedController
   before_action :set_image, only: [:show, :edit, :update, :destroy]
 
   def upload
